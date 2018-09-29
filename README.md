@@ -1,30 +1,30 @@
 # nI2C
 A non-blocking I2C library for Arduino/AVR without limitations!
 
-  |___FEATURE_____________________________|__Wire_|__nI2C_|
-  |                                       |       |       |
-  | Non-blocking Read & Write.            |  NO   |  YES  |
-  |                                       |       |       |
-  | Can Read/Write more than 32 bytes     |  NO   |  YES  |
-  | with single command.                  |       |       |
-  |                                       |       |       |
-  | User configurable timeout.            |  NO   |  YES  |
-  |                                       |       |       |
-  | Uses less than 50 bytes of SRAM       |  NO   |  YES  |
-  | when idle.                            |       |       |
-  |                                       |       |       |
-  | Interrupt safe.                       |  NO   |  YES  |
-  | (can be used in interrupts)           |       |       |
-  |                                       |       |       |
-  | Provides support for slave device     |  NO   |  YES  |
-  | register addresses.                   |       |       |
-  |                                       |       |       |
-  | Provides ability to delay between     |  NO   |  YES  |
-  | writes (required for many EEPROMs)    |       |       |
-  |                                       |       |       |
-  | Adjusts slave device communication    |  NO   |  YES  |
-  | speed automatically.                  |       |       |
-  |_______________________________________|_______|_______|
+    |___FEATURE_____________________________|__Wire_|__nI2C_|
+    |                                       |       |       |
+    | Non-blocking Read & Write.            |  NO   |  YES  |
+    |                                       |       |       |
+    | Can Read/Write more than 32 bytes     |  NO   |  YES  |
+    | with single command.                  |       |       |
+    |                                       |       |       |
+    | User configurable timeout.            |  NO   |  YES  |
+    |                                       |       |       |
+    | Uses less than 50 bytes of SRAM       |  NO   |  YES  |
+    | when idle.                            |       |       |
+    |                                       |       |       |
+    | Interrupt safe.                       |  NO   |  YES  |
+    | (can be used in interrupts)           |       |       |
+    |                                       |       |       |
+    | Provides support for slave device     |  NO   |  YES  |
+    | register addresses.                   |       |       |
+    |                                       |       |       |
+    | Provides ability to delay between     |  NO   |  YES  |
+    | writes (required for many EEPROMs)    |       |       |
+    |                                       |       |       |
+    | Adjusts slave device communication    |  NO   |  YES  |
+    | speed automatically.                  |       |       |
+    |_______________________________________|_______|_______|
  
  Introduction:
 --------------------------------------------------------------------------------
