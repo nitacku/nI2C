@@ -45,9 +45,8 @@ CTWI::CTWI(void)
 {
     // Activate internal pullups for TWI
     // Required for 400KHz operation
-    // TODO: Would be nice to eliminate digitalWrite dependency
-    digitalWrite(SDA, 1);
-    digitalWrite(SCL, 1);
+    *portOutputRegister(digitalPinToPort(SDA)) |= digitalPinToBitMask(SDA);
+    *portOutputRegister(digitalPinToPort(SCL)) |= digitalPinToBitMask(SCL);
 
     // set i2c bit rate
     SetSpeed(Speed::INIT);
@@ -174,7 +173,7 @@ CTWI::status_t CTWI::MasterQueueNonBlocking(CTWI::Packet& packet, const CTWI::Re
         uint8_t sreg = SREG; // Save register
         cli(); // Memory operators are not reentrant - halt interrupts
         // Allocate memory for message copy
-        uint8_t* message = new uint8_t[packet.length + offset];        
+        uint8_t* message = new uint8_t[packet.length + offset];
         SREG = sreg; // Restore register
 
         // Verify allocation was successful
@@ -577,16 +576,24 @@ void CTWI::InterruptHandler(void)
         break;
 
     case TW_MR_DATA_NACK:              // 0x58: Data received, NACK reply issued
-        // store final received data byte
-        m_buffer[m_buffer_index++] = GetReceivedByte();
+        // prevent buffer overflow
+        if (m_buffer_index < m_buffer_length)
+        {
+            // store final received data byte
+            m_buffer[m_buffer_index++] = GetReceivedByte();
+        }
         Stop(); // transmit stop condition, enable SLA ACK
         // i2c receive is complete
         ProcessCallback(); // Remove packet from queue
         break;
 
     case TW_MR_DATA_ACK:               // 0x50: Data acknowledged
-        // store received data byte
-        m_buffer[m_buffer_index++] = GetReceivedByte();
+        // prevent buffer overflow
+        if (m_buffer_index < m_buffer_length)
+        {
+            // store received data byte
+            m_buffer[m_buffer_index++] = GetReceivedByte();
+        }
         // fall-through to see if more bytes will be received
         [[gnu::fallthrough]]; // Fall-through
     case TW_MR_SLA_ACK:                // 0x40: Slave address acknowledged
